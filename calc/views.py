@@ -14,7 +14,7 @@ def data():
 # Create your views here.
 def home(request):
     
-    return render(request,'home.html',{'exp':0,'result':0,'data':data()})
+    return render(request,'home.html',{'exp':0,'result':0,'accuracy':0,'data':data()})
 
 def add(request):
     val2 = float(request.GET['num2'])
@@ -29,6 +29,9 @@ def add(request):
     regressor.fit(X_train, y_train)
     yettopredict = np.array([[val2]])
     y_pred = regressor.predict(yettopredict)
+    accuracy = regressor.score(X_test,y_test)
+    accuracy = accuracy*100
+    accuracy = int(accuracy)
 
 
-    return render(request,'home.html',{'exp':val2,'result':int(y_pred),'data':data()})
+    return render(request,'home.html',{'exp':val2,'result':int(y_pred),'accuracy':accuracy,'data':data()})
